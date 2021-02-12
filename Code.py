@@ -70,7 +70,7 @@ the deterministic process for assessing damage is as follows, with each step bui
             check if number of models < "starting number of models"/2 if so add +1 to the target of the next roll
             roll 2+ for each remaining unit
 
-attacker: the dictionary containing all information invoved in the current damage dealing it is a bunch of lists inside dictionary inside a dictionary inside a dictionary
+attacker: the dictionary containing all information invoved in the analysis, it is a combination of all the choices for Unit, models, and bonuses that would apply
 
 the organization of this object is as follows from highest level to lowest
 
@@ -92,7 +92,7 @@ Name of Unit: str - this identifies a unit among hundred to note what kinds of m
         FnP: int - the Feel no Pain save of the model, what are the chances to ignore damage all together on a damage by damage basis
         FnP_Mw: int- the Feel no Pain for Mortal Wounds of the model, what are the chances of ignoring mortal wounds all together
         Cost: int - the point cost of the model in order to add it to the army.
-        Weapon1: str list - the names of the weaopn equipped in this particular slot
+        Weapon1: str DICT - the names of the weaopn equipped in this particular slot
 
             R: int - the range of the weapon, the distance at which it can be used
             Type: str - the details on how the weapon works and when can it be shot
@@ -101,6 +101,38 @@ Name of Unit: str - this identifies a unit among hundred to note what kinds of m
             AP: int - the Armor Penetration value of the weapon, how much of the armor on their target do they get through
             D: str - the Damage of the weapon, variable Damage weapons are marked with a "d" before the number like "d6"
             Abilities: str - a list of the special rules that apply to this weapon, they can be things like re-roll all failed to hit rolls, or always wound on a particular number
+            to_hit: str DICT - a dictionary containing all the variables that would apply for this case
+                
+                "re-roll1": boolean - does this unit re-rolls 1s to hit with this weapon
+                "re-roll_all":boolean - does this unit re-rolls all failed to hit with this weapon
+                "modifier": int - what modifier is applied to the rolls on this weapon
+                "extra_form":"re-roll" or "add" - does a an extra add a roll or a success
+                "extra_target":int - the target for the extra
+                "extra_ammount":int - the ammount of rolls or successes added on an extra
+                "extra_target_hard": boolean - can the extra target be modified
+                "target":int - does this particular weapon have a targeted number to hit
+                "target_hard":boolean - can the target be modified
+            },
+            "to_wound":{
+
+                "re-roll1": boolean - does this unit re-rolls 1s to hit with this weapon
+                "re-roll_all":boolean - does this unit re-rolls all failed to hit with this weapon
+                "modifier": int - what modifier is applied to the rolls on this weapon
+                "extra_form":"re-roll" or "add" - does a an extra add a roll or a success
+                "extra_target":int - the target for the extra
+                "extra_ammount":int - the ammount of rolls or successes added on an extra
+                "extra_target_hard": boolean - can the extra target be modified
+                "target":int - does this particular weapon have a targeted number to hit
+                "target_hard":boolean - can the target be modified
+            },
+            "to_save":{
+                "no_invul":False,
+                "no_re-rolls":False
+            },
+            "to_FnP":{
+                "no_invul":False,
+                "no_re-rolls":False
+            }
  
         Weapon2: str list - the names of the weaopn equipped in this particular slot
             +
@@ -154,8 +186,19 @@ Name of Unit: str - this identifies a unit among hundred to note what kinds of m
 because the weapons are shared across units, there are two separate dictionaries, the first on of each unit with each model in the game, the second dictionary contains the specifics of each weapon.
 the first and second dictionaries come together to populate the template of the attacker, there should be a third list called sub-factions which can modify the atributes of a given unit.
 
+the object attacker is a simplified version of the full list including only the information that would be relevant to the attacker
+
 step 2, implement dice rolling for the system.
 
+step 3, implement probabilistical analysis to the system
+
+    this would mean creating an average result for the entire steps, a max result and a min result.
+
+    and then mapping the probability for those results to happen.
+
+    creating results along a curve for each of the matchups
+
+    meaning that each step need to produce at least 3 values, a minimum, an average, and a maximum
 
 
 posible unit composition
@@ -202,14 +245,45 @@ attacker = {
     "S":3,
     "A":1,
     "Cost":8,
-    "Weapon_Type": "Rapid_Fire",
+    "Weapon_Type": "Rapid Fire",
     "Weapon_Attacks":1,
+    "v_Weapon_Attacks":True,
     "Weapon_Abilities": ["Poison"],
     "Weapon_S":3,
     "R" : 24,
     "N" :5,
     "AP":0,
-    "D":6
+    "D":1,
+    "to_hit":{
+        "re-roll1": True,
+        "re-roll_all":False,
+        "modifier": 0,
+        "extra_form":"add",
+        "extra_target":6,
+        "extra_ammount":1,
+        "extra_target_hard": False,
+        "target":0,
+        "target_hard":False
+    },
+    "to_wound":{
+        "re-roll1":True,
+        "re-roll_all":False,
+        "modifier":0,
+        "extra_form":"add",
+        "extra_target":0,
+        "extra_ammount":0,
+        "extra_target_hard": False,
+        "target":4,
+        "target_hard":False
+    },
+    "to_save":{
+        "no_invul":False,
+        "no_re-rolls":False
+    },
+    "to_FnP":{
+        "no_invul":False,
+        "no_re-rolls":False
+    }
 }
 
 defender= {
@@ -218,14 +292,13 @@ defender= {
 "Inv_R":7,
 "Inv_M":7,
 "W":1,
-"FnP":6,
+"FnP":7,
 "FnP_Mw":7,
 "Ld":6,
 "N":10
 }
 
 distance = 11
-dead = 0
 
 def ROLL(dice):
     """ a simple dice roll
@@ -381,7 +454,7 @@ def TO_SAVE(attacker, total_wounds, defender,process):
     Return: the total number of unsaved wounds
     """
     total_f_saves = 0
-    target = defender.get("Ar") + attacker.get("AP")
+    target = defender.get("Ar") - attacker.get("AP")
     if target>defender.get("Inv_R"):
         target=defender.get("Inv_R")
     if process == "deterministic":
@@ -461,4 +534,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

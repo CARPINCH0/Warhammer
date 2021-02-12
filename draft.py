@@ -1,17 +1,2 @@
-import random
-
-def ROLL(dice):
-    """ a simple dice roll
-
-    Args: 
-        dice: how many sides are on the dice
-
-    Returns: the roll of the dice
-    """
-    result= random.randint(1,dice)
-    return result
-    
-
-
-
-print (total hits)
+mean = (2+3+4+7+9)/5
+print(mean)
