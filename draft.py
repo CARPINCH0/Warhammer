@@ -1,7 +1,17 @@
-def func():
-    p=10
-    return p
+import random
 
-p=func()
+def ROLL(dice):
+    """ a simple dice roll
 
-print(p)
+    Args: 
+        dice: how many sides are on the dice
+
+    Returns: the roll of the dice
+    """
+    result= random.randint(1,dice)
+    return result
+    
+
+
+
+print (total hits)
