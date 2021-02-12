@@ -1,0 +1,10 @@
+Weapon,Range,Type,S,AP,damage,abilities
+splinter rifle,24,rapid fire 1,none,0,1,poison
+blaster,18,assault 1,8,-4,d6,
+shredder,12,assaul d6,6,-1,1,"re-roll all wounds against infantry,blast"
+splinter cannon,36,rapid fire 3,none,0,1,poison
+dark lance,36,heavy 1,8,-4,d6,
+blast pistol,6,pistol 1,8,-4,d6,
+agonizer,none,melee 0,none,-2,1,poison
+power sword,none,melee 0,1,-3,1,
+phantasm granade launcher,18,assault d3,1,0,1,"blast,ld -1"
