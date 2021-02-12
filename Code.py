@@ -209,7 +209,7 @@ attacker = {
     "R" : 24,
     "N" :5,
     "AP":0,
-    "D":2
+    "D":6
 }
 
 defender= {
@@ -217,7 +217,7 @@ defender= {
 "Ar":5,
 "Inv_R":7,
 "Inv_M":7,
-"W":3,
+"W":1,
 "FnP":6,
 "FnP_Mw":7,
 "Ld":6,
@@ -268,12 +268,12 @@ def CHANCE(target):
 
 def NUMBER_OF_ATTACKS(attacker, distance, defender, process):
     """
-    determine the number of shots by looking at the weapon type, range, and distance from the target and following this logic
-    if range>distance
-    if Weapon Type rapid fire and range/2>distance then the ammount of attacks is doubled
-    if Weapon Type is blast and target has >5 models min 3 attacks
-    if Weapon Type is blast and target has >10 models min 6 attacks
-    multply that number by the ammount of weapons of that type in the group
+    determine the number of shots by looking at the weapon type, range, and distance from the target and following this logic 
+        if range>distance √
+        if Weapon Type rapid fire and range/2>distance then the ammount of attacks is doubled √
+        if Weapon Type is blast and target has >5 models min 3 attacks
+        if Weapon Type is blast and target has >10 models min 6 attacks
+    multply that number by the ammount of weapons of that type in the group √
     
     Args:   attacker; the atributes of the attacker, indicating what kind of weapon its using and how many of them, weapon Type and number of shots need to be unpacked from this list inside a dictionary
             distance; the distance that between the attacker and the defender
@@ -292,9 +292,9 @@ def NUMBER_OF_ATTACKS(attacker, distance, defender, process):
 
 def TO_HIT(attacker,num_attacks, defender,process):
     """ 
-    a) determine the base target by this logic
-        if weapon type == Melee* then WS
-        else BS
+    a) determine the base target by this logic √
+        if weapon type == Melee* then WS √
+        else BS √
     b) apply modifiers to the target
     c) apply re-rolls to the dice that fail to hit
     d) add any mortal wounds to the wounds being generated
@@ -323,13 +323,13 @@ def TO_HIT(attacker,num_attacks, defender,process):
 
 def TO_WOUND(attacker, total_hits, defender, process):
     """
-    a) compare Stregth of the weapon against Toughtness of the target, except on poison weapons
-    b) determine the base target by this logic, 
-        S == T then 4+
-        S>T and S<2T then 3+
-        S>=2T then 2+
-        S<T and 2S>T then 5+
-        2S>=T then 6+
+    a) compare Stregth of the weapon against Toughtness of the target 
+    b) determine the base target by this logic, √
+        S == T then 4+ √
+        S>T and S<2T then 3+ √
+        S>=2T then 2+ √
+        S<T and 2S>T then 5+ √
+        2S>=T then 6+ √
     c) apply modifiers to the target
     d) add any mortal wounds to the wounds being generated
     e) apply re-rolls to the dice that fail to wound
@@ -365,11 +365,11 @@ def TO_WOUND(attacker, total_hits, defender, process):
     return total_wounds
 
 def TO_SAVE(attacker, total_wounds, defender,process):
-    """4) SAVE
-    a) determine base target by this logic
-        apply AP to Ar = new Ar
-        if new Ar < Inv then new Ar
-        if new Ar > Inv then Inv
+    """
+    a) determine base target by this logic √
+        apply AP to Ar = new Ar √
+        if new Ar < Inv then new Ar √
+        if new Ar > Inv then Inv √
     d) apply modifiers to the target
     e) add any mortal wounds to the wounds being generated
     f) apply re-rolls to the dice that fail to wound
@@ -398,10 +398,10 @@ def TO_SAVE(attacker, total_wounds, defender,process):
     
 def TO_FNP(attacker, total_f_saves, defender, process):
     """
-    a) determine the total damage thought the damage variable for the weapon
+    a) determine the total damage thought the damage variable for the weapon √
     b) apply modifiers to the damage
-    c) determine the base target by looking at the FnP value on the model
-    d) Dmg > W then dead
+    c) determine the base target by looking at the FnP value on the model √
+    d) Dmg > W then dead √
     e) check if there are any mortal wounds left to be allocated on the target apply the next available Mw to the target
     f) determine the base target by looking at the FnP Mw value on the model
     g) repeat steps d, e, and f until the is dead or there are no more Mw to be allocated
@@ -422,9 +422,9 @@ def TO_FNP(attacker, total_f_saves, defender, process):
                 if not ROLL(6) >= target:
                     r_wounds=r_wounds-1
                     print("remainig wounds: " + str(r_wounds))
-                    if r_wounds==0:
-                        dead = dead+1
-                        r_wounds = defender.get("W")
+            if r_wounds<=0:
+                dead = dead+1
+                r_wounds = defender.get("W")
     if process == "probabilistic": 
         if target>6:
             fail_FnP = damage 
@@ -436,6 +436,12 @@ def TO_FNP(attacker, total_f_saves, defender, process):
 
 
 def solve(process):
+    ''' Analyze the data through deterministic or probabilistic expressions
+
+    Args:   
+        process: analysis can be either deterministic, meaning using actual number from a random number generator, or probabilistic, giving a percentage chance of achieving the desired result
+
+    '''
     if process == "deterministic":
         num_attacks = NUMBER_OF_ATTACKS(attacker, distance, defender, process)
         total_hits = TO_HIT(attacker, num_attacks, defender, process)
