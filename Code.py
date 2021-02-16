@@ -198,7 +198,7 @@ step 3, implement probabilistical analysis to the system
 
     creating results along a curve for each of the matchups
 
-    meaning that each step need to produce at least 3 values, a minimum, an average, and a maximum
+    meaning that each step need to produce at least 3 values, a minimum, an average, and a maximum, as well as quartiles
 
 
 posible unit composition
@@ -245,7 +245,7 @@ attacker = {
     "S":3,
     "A":1,
     "Cost":8,
-    "Weapon_Type": "Rapid Fire",
+    "Weapon_Type": "rapid_fire",
     "Weapon_Attacks":1,
     "v_Weapon_Attacks":True,
     "Weapon_Abilities": ["Poison"],
@@ -268,10 +268,10 @@ attacker = {
     "to_wound":{
         "re-roll1":True,
         "re-roll_all":False,
-        "modifier":0,
+        "modifier":1,
         "extra_form":"add",
-        "extra_target":0,
-        "extra_ammount":0,
+        "extra_target":6,
+        "extra_ammount":1,
         "extra_target_hard": False,
         "target":4,
         "target_hard":False
@@ -309,7 +309,6 @@ def ROLL(dice):
     Returns: the roll of the dice
     """
     result= random.randint(1,dice)
-    print("rolled: " + str(result))
     return result
 
 
@@ -339,6 +338,37 @@ def CHANCE(target):
     chance = (7-target)/6
     return chance
 
+    
+def HIT_TARGET(roll, modifier, target, extra_target, extra_form, extra_ammount):
+    """
+    the process of rolling a dice and deciding weather or not its a success and if it receives extra effects
+
+    Args:
+        roll; the value of the roll
+        modifier; the number that the roll is modified by
+        target; the target the roll needs to hit or exceed
+        extra_target; the target for which the roll gets extra bonuses
+        extra_form; the type of extra bonuses
+        extra_ammount; the ammount of extra bonuses
+
+    Returns: a list of values, the first one being the number of regular successes the second one the number of extra successes, this variable is reserved for mortal wounds or other values that would skip the next step in the process
+    """
+    total_hits = [0,0]
+    if roll+modifier >= target:             
+        total_hits[0] = total_hits[0]+1
+        if roll+modifier >= extra_target:
+            if extra_form == "add":         
+                total_hits[0] = total_hits[0] + extra_ammount
+            if extra_form == "roll":
+                roll = ROLL(6)
+                print ("extra roll: " + str(roll))
+                if roll+modifier >= target:
+                    total_hits[0] = total_hits[0]+ extra_ammount
+            if extra_form == "Mw":
+                total_hits[1] = total_hits[1] +extra_ammount
+
+    return total_hits
+
 def NUMBER_OF_ATTACKS(attacker, distance, defender, process):
     """
     determine the number of shots by looking at the weapon type, range, and distance from the target and following this logic 
@@ -354,13 +384,18 @@ def NUMBER_OF_ATTACKS(attacker, distance, defender, process):
     
     Return: returns the number of attacks being produced
     """
-    if attacker.get("R")>distance:
-        num_attacks = attacker.get("Weapon_Attacks")
-        if attacker.get("R")/2>distance and attacker.get("Weapon_Type")=="Rapid_Fire":
+    N = attacker.get("N")
+    num_attacks = attacker.get("Weapon_Attacks")
+    weapon_type = attacker.get("Weapon_Type")
+    R = attacker.get("R")
+
+    if R>distance:
+        if R/2>distance and weapon_type=="rapid_fire":
             num_attacks = num_attacks*2
-        num_attacks = num_attacks * attacker.get("N")
+        num_attacks = num_attacks * N
     else:
         num_attacks = 0
+    print("number of attacks: " + str(num_attacks))
     return num_attacks
 
 def TO_HIT(attacker,num_attacks, defender,process):
@@ -368,7 +403,7 @@ def TO_HIT(attacker,num_attacks, defender,process):
     a) determine the base target by this logic √
         if weapon type == Melee* then WS √
         else BS √
-    b) apply modifiers to the target
+    b) apply modifiers to the rolls
     c) apply re-rolls to the dice that fail to hit
     d) add any mortal wounds to the wounds being generated
     e) apply extra hits for the dice that would fall under that category
@@ -380,15 +415,44 @@ def TO_HIT(attacker,num_attacks, defender,process):
 
     Return: the number of hits on the target 
     """
+    weapon_type = attacker.get("Weapon_Type")
+    WS = attacker.get("WS")
+    BS = attacker.get("BS")
+    to_hit = attacker.get("to_hit")
+    re_roll1 = to_hit.get("re-roll1")
+    re_roll_all = to_hit.get("re-roll_all")
+    modifier = to_hit.get("modifier")
+    extra_form = to_hit.get("extra_form")
+    extra_target= to_hit.get("extra_target")
+    extra_ammount= to_hit.get("extra_ammount")
+    extra_target_hard= to_hit.get("extra_target_hard")
+    target = to_hit.get("target")
+    target_hard= to_hit.get("target_hard")
     total_hits = 0
-    if attacker.get("Weapon_Type") == "melee":
-        target = attacker.get("WS")
-    else:
-        target = attacker.get("BS")
+
+    if target == 0:
+        if weapon_type == "melee":
+            target = WS
+        else:
+            target = BS
+
+   
     if process == "deterministic":
         for n in range(num_attacks):
-            if ROLL(6) >= target:
-                total_hits = total_hits+1
+            roll=ROLL(6)
+            print("rolled: " + str(roll))
+            total_hits = total_hits + HIT_TARGET(roll,modifier, target, extra_target, extra_form, extra_ammount)[0]
+    
+            if re_roll1== True and roll ==1:
+                roll=ROLL(6)
+                print("re-rolled into: " + str(roll))
+                total_hits = total_hits + HIT_TARGET(roll,modifier, target, extra_target, extra_form, extra_ammount)[0]
+            
+            elif re_roll_all == True and roll < target:
+                roll=ROLL(6)
+                print("re-rolled into: " + str(roll))
+                total_hits = total_hits + HIT_TARGET(roll,modifier, target, extra_target, extra_form, extra_ammount)[0]
+
     else:
         total_hits = CHANCE(target)
     print("target to hit: " + str(target))
@@ -396,28 +460,44 @@ def TO_HIT(attacker,num_attacks, defender,process):
 
 def TO_WOUND(attacker, total_hits, defender, process):
     """
-    a) compare Stregth of the weapon against Toughtness of the target 
+    a) compare Stregth of the weapon against Toughtness of the target √
     b) determine the base target by this logic, √
         S == T then 4+ √
         S>T and S<2T then 3+ √
         S>=2T then 2+ √
         S<T and 2S>T then 5+ √
         2S>=T then 6+ √
-    c) apply modifiers to the target
+    c) apply modifiers to the target √
     d) add any mortal wounds to the wounds being generated
-    e) apply re-rolls to the dice that fail to wound
-    f) apply extra hits for the dice that would fall under that category
-        1) repeat step a, b, c, and d for the newly generated rolls if aplicable
+    e) apply re-rolls to the dice that fail to wound √
+    f) apply extra hits for the dice that would fall under that category √
+        1) repeat step a, b, c, and d for the newly generated rolls if aplicable √
 
     Args:   attacker; the atributes of the attacker, indicating what is the stregth of the weapon it is using, and any special abilities or modifiers that might affect this roll
             num_hits; the number of hits on the target
             defender; the atributes of the defender, indicating the toughness of the target and any modifiers that might change the result
     
-    Return: the number of wounds on the target
+    Return: the number of wounds on the target.
     """
-    total_wounds = 0
-    S = attacker.get("Weapon_S")
+
+    weapon_type = attacker.get("Weapon_Type")
+    S = attacker.get("S")
+    weapon_S = attacker.get("Weapon_S")
     T = defender.get("T")
+    to_wound = attacker.get("to_wound")
+    re_roll1 = to_wound.get("re-roll1")
+    re_roll_all = to_wound.get("re-roll_all")
+    modifier = to_wound.get("modifier")
+    extra_form = to_wound.get("extra_form")
+    extra_target= to_wound.get("extra_target")
+    extra_ammount= to_wound.get("extra_ammount")
+    extra_target_hard= to_wound.get("extra_target_hard")
+    target = to_wound.get("target")
+    target_hard= to_wound.get("target_hard")
+    
+    total_wounds = 0
+
+
     if S == T:
         target=4
     elif 2*T<S>T:
@@ -428,13 +508,26 @@ def TO_WOUND(attacker, total_hits, defender, process):
         target=5
     elif 2*S<=T:
         target=6
+
     if process == "deterministic":
         for n in range(total_hits):
-            if ROLL(6) >= target:
-                total_wounds = total_wounds+1
+            roll = ROLL(6)
+            print("rolled: " + str(roll))
+            total_wounds = total_wounds + HIT_TARGET(roll,modifier, target, extra_target, extra_form, extra_ammount)[0]
+
+            if re_roll1== True and roll ==1:
+                roll=ROLL(6)
+                print("re-rolled 1s into: " + str(roll))
+                total_wounds = total_wounds + HIT_TARGET(roll,modifier, target, extra_target, extra_form, extra_ammount)[0]
+            
+            elif re_roll_all == True and roll < target:
+                roll=ROLL(6)
+                print("re-rolled all fail into: " + str(roll))
+                total_wounds = total_wounds + HIT_TARGET(roll,modifier, target, extra_target, extra_form, extra_ammount)[0]
+
     if process == "probabilistic": 
         total_wounds=total_hits*CHANCE(target)
-    print("target to wound: " + str(target))
+    print("target to wound: " + str(target) + " with a " + "+" + str(modifier) + " modifier" if modifier >0 else "target to wound: " + str(target) + " with a " + "-" + str(modifier) + " modifier" )
     return total_wounds
 
 def TO_SAVE(attacker, total_wounds, defender,process):

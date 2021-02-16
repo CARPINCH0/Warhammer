@@ -1,2 +1,3 @@
-mean = (2+3+4+7+9)/5
-print(mean)
+modifier = 1
+print ("+" if modifier>0 else "-")
+
