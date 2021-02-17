@@ -97,38 +97,40 @@ Name of Unit: str - this identifies a unit among hundred to note what kinds of m
         FnP: int - the Feel no Pain save of the model, what are the chances to ignore damage all together on a damage by damage basis
         FnP_Mw: int- the Feel no Pain for Mortal Wounds of the model, what are the chances of ignoring mortal wounds all together
         Cost: int - the point cost of the model in order to add it to the army.
-        Weapon1: str DICT - the names of the weaopn equipped in this particular slot
+        Weapon1: str DICT - the names of the weapons equipped in this particular slot, and the cost for each one
 
             R: int - the range of the weapon, the distance at which it can be used
             Type: str - the details on how the weapon works and when can it be shot
             A: str - the number of attacks that the weapon has, melee weapons add this number to the Attack characteristic of the model, variable Attack weapons are marked with a "d" before the number like "d6" for a random value between 1 and 6
             S: str - the Stregth of the weapon, melee weapons add this number to the Stregth characteristic of the model, variable Stregth weapons are marked with a "d" before the number like "d6"
-            AP: int - the Armor Penetration value of the weapon, how much of the armor on their target do they get through
+            AP: str - the Armor Penetration value of the weapon, how much of the armor on their target do they get through
             D: str - the Damage of the weapon, variable Damage weapons are marked with a "d" before the number like "d6"
-            Abilities: str - a list of the special rules that apply to this weapon, they can be things like re-roll all failed to hit rolls, or always wound on a particular number
-            to_hit: str DICT - a dictionary containing all the variables that would apply for this case
-                
-                "re-roll1": boolean - does this unit re-rolls 1s to hit with this weapon
-                "re-roll_all":boolean - does this unit re-rolls all failed to hit with this weapon
-                "modifier": int - what modifier is applied to the rolls on this weapon
-                "extra_form":"re-roll" or "add" - does a an extra add a roll or a success
-                "extra_target":int - the target for the extra
-                "extra_ammount":int - the ammount of rolls or successes added on an extra
-                "extra_target_hard": boolean - can the extra target be modified
-                "target":int - does this particular weapon have a targeted number to hit
-                "target_hard":boolean - can the target be modified
-            },
-            "to_wound":{
+            Abilities: str DICT - a list of the special rules that apply to this weapon, they can be things like re-roll all failed to hit rolls, or always wound on a particular number
+            slots: int - the number of slots that that weapon uses. a two handed weapon uses two slots. a one handed weapon uses one
 
-                "re-roll1": boolean - does this unit re-rolls 1s to hit with this weapon
-                "re-roll_all":boolean - does this unit re-rolls all failed to hit with this weapon
-                "modifier": int - what modifier is applied to the rolls on this weapon
-                "extra_form":"re-roll" or "add" - does a an extra add a roll or a success
-                "extra_target":int - the target for the extra
-                "extra_ammount":int - the ammount of rolls or successes added on an extra
-                "extra_target_hard": boolean - can the extra target be modified
-                "target":int - does this particular weapon have a targeted number to hit
-                "target_hard":boolean - can the target be modified
+        to_hit: str DICT - a dictionary containing all the variables that would apply for this case
+            
+            "re-roll1": boolean - does this unit re-rolls 1s to hit with this weapon
+            "re-roll_all":boolean - does this unit re-rolls all failed to hit with this weapon
+            "modifier": int - what modifier is applied to the rolls on this weapon
+            "extra_form":"re-roll" or "add" - does a an extra add a roll or a success
+            "extra_target":int - the target for the extra
+            "extra_ammount":int - the ammount of rolls or successes added on an extra
+            "extra_target_hard": boolean - can the extra target be modified
+            "target":int - does this particular weapon have a targeted number to hit
+            "target_hard":boolean - can the target be modified
+        },
+        "to_wound":{
+
+            "re-roll1": boolean - does this unit re-rolls 1s to hit with this weapon
+            "re-roll_all":boolean - does this unit re-rolls all failed to hit with this weapon
+            "modifier": int - what modifier is applied to the rolls on this weapon
+            "extra_form":"re-roll" or "add" - does a an extra add a roll or a success
+            "extra_target":int - the target for the extra
+            "extra_ammount":int - the ammount of rolls or successes added on an extra
+            "extra_target_hard": boolean - can the extra target be modified
+            "target":int - does this particular weapon have a targeted number to hit
+            "target_hard":boolean - can the target be modified
             },
             "to_save":{
                 "no_invul":False,

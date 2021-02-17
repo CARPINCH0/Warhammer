@@ -1,5 +1,0 @@
-Model,M,WS,BS,S,T,W,A,Ld,Sa,Inv,FnP,Cost,unit,weapon1,weapon2,weapon3,unit,min,max,requirements,min squad,max squad,ability,key-word
-Kabalite Warrior,7,3,3,3,3,1,1,7,5,7,6,8,kabalite warrior,splinter rifle,none,none,kabalite warriors,3,19,none,5,20,"power from pain,vanguard of the dark city","Aeldari,Drukhari,Infantry,Kabalite Warriors,Troops,Kabal"
-Syrabite,7,3,3,3,3,1,2,8,5,7,6,8,kabalite warrior,"splinter rifle,blast pistol,splinter pistol","agonizer,power sword",phantasm grande launcher,kabalite warriors,1,1,none,5,20,"power from pain,vanguard of the dark city","Aeldari,Drukhari,Infantry,Kabalite Warriors,Troops,Kabal"
-Kabalite Warrior with special weapon,7,3,3,3,3,1,1,7,5,7,6,8,kabalite warrior,"blaster,shredder",none,none,kabalite warriors,0,4,e5,5,20,"power from pain,vanguard of the dark city","Aeldari,Drukhari,Infantry,Kabalite Warriors,Troops,Kabal"
-Kabalite Warrior with heavy weapon,7,3,3,3,3,1,1,7,5,7,6,8,kabalite warrior,"splinter cannon,dark lance",none,none,kabalite warriors,0,2,e10,5,20,"power from pain,vanguard of the dark city","Aeldari,Drukhari,Infantry,Kabalite Warriors,Troops,Kabal"

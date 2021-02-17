@@ -1,0 +1,128 @@
+weapons = {
+            "splinter rifle":
+                {
+                "Range":24,
+                "Type":"rapid fire",
+                "A":"1",
+                "S":"0",
+                "AP":"0",
+                "D":"1",
+                "abilities":
+                    {
+                    "poison":4
+                    },
+                "slots": 2
+                },
+            "splinter pistol":
+                {
+                "Range":12,
+                "Type":"pistol",
+                "A":"1",
+                "S":"0",
+                "AP":"0",
+                "D":"1",
+                "abilities":
+                    {
+                    "poison":4
+                    },
+                "slots": 1
+                },
+            "blast pistol":
+                {
+                "Range":6,
+                "Type":"pistol",
+                "A":"1",
+                "S":"8",
+                "AP":"-4",
+                "D":"d6",
+                "abilities":{},
+                "slots": 1
+                },
+            "agonizer":
+                {
+                "Range":0,
+                "Type":"melee",
+                "A":"0",
+                "S":"0",
+                "AP":"-2",
+                "D":"1",
+                "abilities":
+                    {
+                    "poison":4
+                    },
+                "slots": 1
+                },
+            "power sword":
+                {
+                "Range":0,
+                "Type":"melee",
+                "A":"0",
+                "S":"0",
+                "AP":"-3",
+                "D":"1",
+                "abilities":[],
+                "slots": 1
+                },
+            "phantasm granade launcher":
+                {
+                "Range":18,
+                "Type":"assault",
+                "A":"d3",
+                "S":"1",
+                "AP":"0",
+                "D":"1",
+                "abilities":
+                {
+                "leadership": -1
+                },
+                "slots": 0
+                },
+            "splinter cannon":
+                {
+                "Range":36,
+                "Type":"heavy",
+                "A":"3",
+                "S":"3",
+                "AP":"-1",
+                "D":"2",
+                "abilities":
+                    [
+                    "poison"
+                    ],
+                "slots": 2
+                },
+            "dark lance":
+                {
+                "Range":36,
+                "Type":"heavy",
+                "A":"1",
+                "S":"8",
+                "AP":"-4",
+                "D":"d6",
+                "abilities":[],
+                "slots": 2
+                },
+            "blaster":
+                {
+                "Range":18,
+                "Type":"assault",
+                "A":"1",
+                "S":"8",
+                "AP":"-4",
+                "D":"d6",
+                "abilities":[],
+                "cost":5,
+                "slots": 2
+                },
+            "shredder":
+                {
+                "Range":36,
+                "Type":"heavy",
+                "A":1,
+                "S":8,
+                "AP":-4,
+                "D":"d6",
+                "abilities":[],
+                "cost":15,
+                "slots": 2
+                }

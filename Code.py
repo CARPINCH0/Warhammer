@@ -2,6 +2,281 @@ import random
 
 
 # Dummy Data!
+
+units = {"Kabalite Warriors":
+            {
+            "Kabalite Warrior":
+                {
+                "M":7,
+                "WS":3,
+                "BS":3,
+                "S":3,
+                "T":3,
+                "W":1,
+                "A":2,
+                "Ld":7,
+                "Ar":4,
+                "InvM":7,
+                "InvR":7,
+                "FnP":6,
+                "FnPM":6,
+                "Cost":8,
+                "Weapon1":{
+                    "splinter rifle":
+                        {
+                        "Range":24,
+                        "Type":"rapid fire",
+                        "weapon_A":1,
+                        "S":0,
+                        "AP":0,
+                        "D":1,
+                        "abilities":
+                            {
+                            "poison":4
+                            },
+                        "cost":0,
+                        "slots": 2
+                        }
+                    },
+                "Weapon2":none,
+                "Weapon3":none,
+                "Min":3, 
+                "Max":19,
+                "Requirements":none,
+                "Ability":["power from pain","vanguard of the dark city"],
+                "Key-word":["Ealdari", "Drukhari", "Infantry", "Kabalite Warriors", "Troops", "Kabal"]}
+                }
+            {"Syrabite":
+                {
+                "M":7,
+                "WS":3,
+                "BS":3,
+                "S":3,
+                "T":3,
+                "W":1,
+                "A":3,
+                "Ld":8,
+                "Ar":4,
+                "InvM":7,
+                "InvR":7,
+                "FnP":6,
+                "FnPM":6,
+                "Cost":8,
+                "Slots":2,
+                "Weapon1":
+                    {
+                    "splinter rifle":
+                        {
+                        "Range":24,
+                        "Type":"rapid fire",
+                        "weapon_A":1,
+                        "S":0,
+                        "AP":0,
+                        "D":1,
+                        "abilities":
+                            {
+                            "poison":4
+                            },
+                        "cost":0,
+                        "slots": 2
+                        },
+                    "splinter pistol":
+                        {
+                        "Range":12,
+                        "Type":"pistol",
+                        "weapon_A":1,
+                        "S":0,
+                        "AP":0,
+                        "D":1,
+                        "abilities":
+                            {
+                            "poison":4
+                            },
+                        "cost":0,
+                        "slots": 1
+                        },
+                    "blast pistol":
+                        {
+                        "Range":6,
+                        "Type":"pistol",
+                        "weapon_A":1,
+                        "S":8,
+                        "AP":-4,
+                        "D":d6,
+                        "abilities":{}
+                        "cost":5,
+                        "slots": 1
+                        }
+                    },
+                "Weapon2":
+                    {
+                    "agonizer":
+                        {
+                        "Range":0,
+                        "Type":"melee",
+                        "weapon_A":0,
+                        "S":0,
+                        "AP":-2,
+                        "D":1,
+                        "abilities":
+                            {
+                            "poison":4
+                            },
+                        "cost":5,
+                        "slots": 1
+                        },
+                    "power sword":
+                        {
+                        "Range":0,
+                        "Type":"melee",
+                        "weapon_A":0,
+                        "S":0,
+                        "AP":-3,
+                        "D":1,
+                        "abilities":[],
+                        "cost":5,
+                        "slots": 1
+                        }
+                    },
+                "weapon3":
+                    {
+                    "phantasm granade launcher":
+                        {
+                        "Range":18,
+                        "Type":"assault",
+                        "weapon_A":d3,
+                        "S":1,
+                        "AP":0,
+                        "D":1,
+                        "abilities":
+                        {
+                        "leadership": -1
+                        },
+                        "cost":5,
+                        "slots": 0
+                        }
+                    },
+                "Min":1, 
+                "Max":1,
+                "Requirements":none,
+                "Ability":["power from pain","vanguard of the dark city"],
+                "Key-word":["Ealdari", "Drukhari", "Infantry", "Kabalite Warriors", "Troops", "Kabal"]}
+                }
+            {"Kabalite with Heavy Weapon":
+                {
+                "M":7,
+                "WS":3,
+                "BS":3,
+                "S":3,
+                "T":3,
+                "W":1,
+                "A":2,
+                "Ld":7,
+                "Ar":4,
+                "InvM":7,
+                "InvR":7,
+                "FnP":6,
+                "FnPM":6,
+                "Cost":8,
+                "Weapon1":
+                    {
+                    "splinter cannon":
+                        {
+                        "Range":36,
+                        "Type":"heavy",
+                        "weapon_A":3,
+                        "S":3,
+                        "AP":-1,
+                        "D":2,
+                        "abilities":
+                            [
+                            "poison"
+                            ],
+                        "cost":10,
+                        "slots": 2
+                        },
+                    "dark lance":
+                        {
+                        "Range":36,
+                        "Type":"heavy",
+                        "weapon_A":1,
+                        "S":8,
+                        "AP":-4,
+                        "D":d6,
+                        "abilities":[],
+                        "cost":15,
+                        "slots": 2
+                        }
+                    },
+                "Weapon2":{},
+                "Weapon3":{},
+                "Min":0, 
+                "Max":2,
+                "Requirements":"E10",
+                "Ability":["power from pain","vanguard of the dark city"],
+                "Key-word":["Ealdari", "Drukhari", "Infantry", "Kabalite Warriors", "Troops", "Kabal"]
+                }
+            {"Kabalite with Special Weapon":
+                {
+                "M":7,
+                "WS":3,
+                "BS":3,
+                "S":3,
+                "T":3,
+                "W":1,
+                "A":2,
+                "Ld":7,
+                "Ar":4,
+                "InvM":7,
+                "InvR":7,
+                "FnP":6,
+                "FnPM":6,
+                "Cost":8,
+                "Weapons":
+                    {
+                    "blaster":
+                        {
+                        "Range":18,
+                        "Type":"assault",
+                        "weapon_A":1,
+                        "S":8,
+                        "AP":-4,
+                        "D":d6,
+                        "abilities":[],
+                        "cost":5,
+                        "slots": 2
+                        },
+                    "shredder":
+                        {
+                        "Range":36,
+                        "Type":"heavy",
+                        "weapon_A":1,
+                        "S":8,
+                        "AP":-4,
+                        "D":d6,
+                        "abilities":[],
+                        "cost":15,
+                        "slots": 2
+                        }
+                    }
+                "Weapon2":[],
+                "Weapon3":[],
+                "Min":0, 
+                "Max":4,
+                "Requirements":"E5",
+                "Ability":["power from pain","vanguard of the dark city"],
+                "Key-word":["Ealdari", "Drukhari", "Infantry", "Kabalite Warriors", "Troops", "Kabal"]
+                }
+            }
+            "Min squad":5,
+            "Max_squad":20,
+        }
+
+
+
+
+
+
 attacker = {
     "WS":3,
     "BS":3,
