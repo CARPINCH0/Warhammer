@@ -6,37 +6,37 @@ attacker = {
     "WS":3,
     "BS":3,
     "S":3,
-    "A":1,
-    "Cost":8,
-    "Weapon_Type": "rapid_fire",
-    "Weapon_Attacks":1,
+    "A":4,
+    "Cost":20,
+    "Weapon_Type": "heavy",
+    "Weapon_Attacks":3,
     "v_Weapon_Attacks":True,
-    "Weapon_Abilities": ["Poison"],
-    "Weapon_S":3,
-    "R" : 24,
-    "N" :5,
-    "AP":0,
-    "D":1,
+    "Weapon_Abilities": ["poison"],
+    "Weapon_S":0,
+    "R" : 0,
+    "N" :4,
+    "AP":-1,
+    "D":2,
     "to_hit":{
-        "re-roll1": True,
+        "re-roll1": False,
         "re-roll_all":False,
-        "modifier": 0,
+        "modifier": -1,
         "extra_form":"add",
-        "extra_target":6,
-        "extra_ammount":1,
+        "extra_target":0,
+        "extra_ammount":0,
         "extra_target_hard": False,
         "target":0,
         "target_hard":False
     },
     "to_wound":{
-        "re-roll1":True,
+        "re-roll1":False,
         "re-roll_all":False,
-        "modifier":1,
+        "modifier":0,
         "extra_form":"add",
-        "extra_target":6,
-        "extra_ammount":1,
+        "extra_target":0,
+        "extra_ammount":0,
         "extra_target_hard": False,
-        "target":4,
+        "target":0,
         "target_hard":False
     },
     "to_save":{
@@ -50,18 +50,18 @@ attacker = {
 }
 
 defender= {
-"T":3,
-"Ar":5,
+"T":4,
+"Ar":3,
 "Inv_R":7,
 "Inv_M":7,
-"W":1,
+"W":2,
 "FnP":7,
 "FnP_Mw":7,
-"Ld":6,
+"Ld":8,
 "N":10
 }
 
-distance = 11
+distance = 0
 
 def ROLL(dice):
     """ a simple dice roll
@@ -181,6 +181,9 @@ def TO_HIT(attacker,num_attacks, defender,process):
     weapon_type = attacker.get("Weapon_Type")
     WS = attacker.get("WS")
     BS = attacker.get("BS")
+    A = attacker.get("A")
+    N = attacker.get("N")
+    weapon_attacks = attacker.get("Weapon_Attacks")
     to_hit = attacker.get("to_hit")
     re_roll1 = to_hit.get("re-roll1")
     re_roll_all = to_hit.get("re-roll_all")
@@ -196,11 +199,16 @@ def TO_HIT(attacker,num_attacks, defender,process):
     if target == 0:
         if weapon_type == "melee":
             target = WS
+            num_attacks = (A + weapon_attacks) * N
+            print("number of melee attacks: " + str(num_attacks))
         else:
             target = BS
+            num_attacks = weapon_attacks * N
+            print("number of ranged attacks: " + str(num_attacks))
 
    
     if process == "deterministic":
+        
         for n in range(num_attacks):
             roll=ROLL(6)
             print("rolled: " + str(roll))
@@ -208,17 +216,19 @@ def TO_HIT(attacker,num_attacks, defender,process):
     
             if re_roll1== True and roll ==1:
                 roll=ROLL(6)
-                print("re-rolled into: " + str(roll))
-                total_hits = total_hits + HIT_TARGET(roll,modifier, target, extra_target, extra_form, extra_ammount)[0]
+                if roll != 1:
+                    print("re-rolled into: " + str(roll))
+                    total_hits = total_hits + HIT_TARGET(roll,modifier, target, extra_target, extra_form, extra_ammount)[0]
             
             elif re_roll_all == True and roll < target:
                 roll=ROLL(6)
-                print("re-rolled into: " + str(roll))
-                total_hits = total_hits + HIT_TARGET(roll,modifier, target, extra_target, extra_form, extra_ammount)[0]
+                if roll != 1:
+                    print("re-rolled into: " + str(roll))
+                    total_hits = total_hits + HIT_TARGET(roll,modifier, target, extra_target, extra_form, extra_ammount)[0]
 
     else:
         total_hits = CHANCE(target)
-    print("target to hit: " + str(target))
+    print("target to hit: " + str(target) + " with a " + "+" + str(modifier) + " modifier" if modifier >-1 else "target to hit: " + str(target) + " with a " + str(modifier) + " modifier" )
     return total_hits
 
 def TO_WOUND(attacker, total_hits, defender, process):
@@ -257,9 +267,15 @@ def TO_WOUND(attacker, total_hits, defender, process):
     extra_target_hard= to_wound.get("extra_target_hard")
     target = to_wound.get("target")
     target_hard= to_wound.get("target_hard")
+    weapon_special = attacker.get("Weapon_Abilities")
+
     
     total_wounds = 0
 
+    if weapon_type == "melee":
+        S = S + weapon_S
+    
+    
 
     if S == T:
         target=4
@@ -280,17 +296,19 @@ def TO_WOUND(attacker, total_hits, defender, process):
 
             if re_roll1== True and roll ==1:
                 roll=ROLL(6)
-                print("re-rolled 1s into: " + str(roll))
-                total_wounds = total_wounds + HIT_TARGET(roll,modifier, target, extra_target, extra_form, extra_ammount)[0]
+                if roll != 1:
+                    print("re-rolled 1s into: " + str(roll))
+                    total_wounds = total_wounds + HIT_TARGET(roll,modifier, target, extra_target, extra_form, extra_ammount)[0]
             
             elif re_roll_all == True and roll < target:
                 roll=ROLL(6)
-                print("re-rolled all fail into: " + str(roll))
-                total_wounds = total_wounds + HIT_TARGET(roll,modifier, target, extra_target, extra_form, extra_ammount)[0]
+                if roll != 1:
+                    print("re-rolled all fail into: " + str(roll))
+                    total_wounds = total_wounds + HIT_TARGET(roll,modifier, target, extra_target, extra_form, extra_ammount)[0]
 
     if process == "probabilistic": 
         total_wounds=total_hits*CHANCE(target)
-    print("target to wound: " + str(target) + " with a " + "+" + str(modifier) + " modifier" if modifier >0 else "target to wound: " + str(target) + " with a " + "-" + str(modifier) + " modifier" )
+    print("target to wound: " + str(target) + " with a " + "+" + str(modifier) + " modifier" if modifier >-1 else "target to wound: " + str(target) + " with a " + str(modifier) + " modifier" )
     return total_wounds
 
 def TO_SAVE(attacker, total_wounds, defender,process):
@@ -309,13 +327,20 @@ def TO_SAVE(attacker, total_wounds, defender,process):
     
     Return: the total number of unsaved wounds
     """
+    inv_R = defender.get("Inv_R")
+    inv_M = defender.get("Inv_M")
+    Ar = defender.get("Ar")
+    AP = attacker.get("AP")
+
+
     total_f_saves = 0
-    target = defender.get("Ar") - attacker.get("AP")
-    if target>defender.get("Inv_R"):
-        target=defender.get("Inv_R")
+    target = Ar - AP
+    if target>inv_R:
+        target=inv_R
     if process == "deterministic":
         for n in range(total_wounds):
-            if not ROLL(6) >= target:
+            roll = ROLL(6)
+            if not roll >= target:
                 total_f_saves = total_f_saves+1
     if process == "probabilistic": 
         if(target>6):
@@ -381,7 +406,6 @@ def solve(process):
         print("total failed saves: " + str(total_f_saves))
         dead = TO_FNP(attacker, total_f_saves, defender, process)
         print("total dead: " + str(dead))
-
 
 
 def main():

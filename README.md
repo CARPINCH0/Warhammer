@@ -240,3 +240,12 @@ average damage against
                         monster/bike T7 Ar7 Inv7 FnP7:
 
 would love the final result to be a detail exploration of what each unit does against particular matchups, with a zoom into their offensive and defensive power, as well as a more well rounded star chart expression of how do their other areas work
+
+
+
+
+
+KNOWN BUGS
+
+natural 1s should always be counted as a fail
+
