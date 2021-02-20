@@ -1,126 +1,124 @@
-units = {"Kabalite Warriors":
+{"Kabalite Warriors":
+        {
+        "Kabalite Warrior":
             {
-            "Kabalite Warrior":
-                {
-                "M":7,
-                "WS":3,
-                "BS":3,
-                "S":3,
-                "T":3,
-                "W":1,
-                "A":2,
-                "Ld":7,
-                "Ar":4,
-                "InvM":7,
-                "InvR":7,
-                "FnP":6,
-                "FnPM":6,
-                "Cost":8,
-                "Weapon1":{"splinter rifle":0},
-                "Weapon2":{},
-                "Weapon3":{},
-                "Min":3, 
-                "Max":19,
-                "Requirements":"A0",
-                "Ability":["power from pain","vanguard of the dark city"],
-                "Key-word":["Ealdari", "Drukhari", "Infantry", "Kabalite Warriors", "Troops", "Kabal"]}
-                }
-            {
-            "Syrabite":
-                {
-                "M":7,
-                "WS":3,
-                "BS":3,
-                "S":3,
-                "T":3,
-                "W":1,
-                "A":3,
-                "Ld":8,
-                "Ar":4,
-                "InvM":7,
-                "InvR":7,
-                "FnP":6,
-                "FnPM":6,
-                "Cost":8,
-                "Slots":2,
-                "Weapon1":
-                    {
-                    "splinter rifle":0,
-                    "splinter pistol":0,
-                    "blast pistol":5
-                    },
-                "Weapon2":
-                    {
-                    "agonizer":5,
-                    "power sword":5
-                    },
-                "weapon3":
-                    {"phantasm granade launcher":5},
-                "Min":1, 
-                "Max":1,
-                "Requirements":"A0",
-                "Ability":["power from pain","vanguard of the dark city"],
-                "Key-word":["Ealdari", "Drukhari", "Infantry", "Kabalite Warriors", "Troops", "Kabal"]}
-                }
-            {"Kabalite with Heavy Weapon":
-                {
-                "M":7,
-                "WS":3,
-                "BS":3,
-                "S":3,
-                "T":3,
-                "W":1,
-                "A":2,
-                "Ld":7,
-                "Ar":4,
-                "InvM":7,
-                "InvR":7,
-                "FnP":6,
-                "FnPM":6,
-                "Cost":8,
-                "Weapon1":
-                    {
-                    "splinter cannon":10,
-                    "dark lance":15
-                    },
-                "Weapon2":{},
-                "Weapon3":{},
-                "Min":0, 
-                "Max":2,
-                "Requirements":"E10",
-                "Ability":["power from pain","vanguard of the dark city"],
-                "Key-word":["Ealdari", "Drukhari", "Infantry", "Kabalite Warriors", "Troops", "Kabal"]
-                }
-            {"Kabalite with Special Weapon":
-                {
-                "M":7,
-                "WS":3,
-                "BS":3,
-                "S":3,
-                "T":3,
-                "W":1,
-                "A":2,
-                "Ld":7,
-                "Ar":4,
-                "InvM":7,
-                "InvR":7,
-                "FnP":6,
-                "FnPM":6,
-                "Cost":8,
-                "Weapons":
-                    {
-                    "blaster":5,
-                    "shredder":15,
-                    },
-                "Weapon2":[],
-                "Weapon3":[],
-                "Min":0, 
-                "Max":4,
-                "Requirements":"E5",
-                "Ability":["power from pain","vanguard of the dark city"],
-                "Key-word":["Ealdari", "Drukhari", "Infantry", "Kabalite Warriors", "Troops", "Kabal"]
-                }
+            "M":7,
+            "WS":3,
+            "BS":3,
+            "S":3,
+            "T":3,
+            "W":1,
+            "A":2,
+            "Ld":7,
+            "Ar":4,
+            "InvM":7,
+            "InvR":7,
+            "FnP":6,
+            "FnPM":6,
+            "Cost":8,
+            "Weapon1":{"splinter rifle":0},
+            "Weapon2":{},
+            "Weapon3":{},
+            "Min":3, 
+            "Max":19,
+            "Requirements":"A0",
+            "Ability":["power from pain","vanguard of the dark city"],
+            "Key-word":["Ealdari", "Drukhari", "Infantry", "Kabalite Warriors", "Troops", "Kabal"]}
             },
-            "Min squad":5,
-            "Max_squad":20,
-        }
+        "Syrabite":
+            {
+            "M":7,
+            "WS":3,
+            "BS":3,
+            "S":3,
+            "T":3,
+            "W":1,
+            "A":3,
+            "Ld":8,
+            "Ar":4,
+            "InvM":7,
+            "InvR":7,
+            "FnP":6,
+            "FnPM":6,
+            "Cost":8,
+            "Slots":2,
+            "Weapon1":
+                {
+                "splinter rifle":0,
+                "splinter pistol":0,
+                "blast pistol":5
+                },
+            "Weapon2":
+                {
+                "agonizer":5,
+                "power sword":5
+                },
+            "weapon3":
+                {"phantasm granade launcher":5},
+            "Min":1, 
+            "Max":1,
+            "Requirements":"A0",
+            "Ability":["power from pain","vanguard of the dark city"],
+            "Key-word":["Ealdari", "Drukhari", "Infantry", "Kabalite Warriors", "Troops", "Kabal"]
+            },
+        "Kabalite with Heavy Weapon":
+            {
+            "M":7,
+            "WS":3,
+            "BS":3,
+            "S":3,
+            "T":3,
+            "W":1,
+            "A":2,
+            "Ld":7,
+            "Ar":4,
+            "InvM":7,
+            "InvR":7,
+            "FnP":6,
+            "FnPM":6,
+            "Cost":8,
+            "Weapon1":
+                {
+                "splinter cannon":10,
+                "dark lance":15
+                },
+            "Weapon2":{},
+            "Weapon3":{},
+            "Min":0, 
+            "Max":2,
+            "Requirements":"E10",
+            "Ability":["power from pain","vanguard of the dark city"],
+            "Key-word":["Ealdari", "Drukhari", "Infantry", "Kabalite Warriors", "Troops", "Kabal"]
+            },
+        "Kabalite with Special Weapon":
+            {
+            "M":7,
+            "WS":3,
+            "BS":3,
+            "S":3,
+            "T":3,
+            "W":1,
+            "A":2,
+            "Ld":7,
+            "Ar":4,
+            "InvM":7,
+            "InvR":7,
+            "FnP":6,
+            "FnPM":6,
+            "Cost":8,
+            "Weapons":
+                {
+                "blaster":5,
+                "shredder":15
+                },
+            "Weapon2":[],
+            "Weapon3":[],
+            "Min":0, 
+            "Max":4,
+            "Requirements":"E5",
+            "Ability":["power from pain","vanguard of the dark city"],
+            "Key-word":["Ealdari", "Drukhari", "Infantry", "Kabalite Warriors", "Troops", "Kabal"]
+            },
+        "Min squad":5,
+        "Max_squad":20
+    }
